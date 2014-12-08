@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffededed"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/topbar_list_device"
+        layout="@layout/common_topbar_list_device" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/topbar_list_device" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/text_no_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="20.0dip"
+        android:text="对不起，没有符合条件的设备！"
+        android:textColor="@color/weightGray" 
+        android:textSize="18.0sp"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

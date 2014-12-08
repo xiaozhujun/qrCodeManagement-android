@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+        android:id="@+id/topbar_main"
+        layout="@layout/common_topbar_get_device" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/topbar_main"
+        android:background="#ffededed" >
+
+        <RelativeLayout
+            android:id="@+id/tv_hint"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/result_choose_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10.0dip"
+                android:padding="5.0dip"
+                android:text="请输入查询条件，查询需要打印二维码的设备："
+                android:textSize="18.0sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/deviceId_panel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_hint"
+            android:background="@drawable/activity_panel_background"
+            android:clickable="true"
+            android:paddingBottom="16.0dip"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip"
+            android:paddingTop="16.0dip" 
+            >
+
+            <TextView
+                android:id="@+id/deviceId_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="设备编号："
+                android:textColor="#ff333333"
+                android:textSize="15.0dip" />
+
+            <ImageView
+                android:id="@+id/type_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/activity_loc_arrow" />
+
+            <TextView
+                android:id="@+id/deviceId_value"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_toLeftOf="@id/type_arrow"
+                android:layout_toRightOf="@id/deviceId_title"
+                android:gravity="right"
+                android:singleLine="true"
+                android:textColor="#ff676767"
+                android:textSize="15.0dip" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/deviceType_panel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/deviceId_panel"
+            android:background="@drawable/activity_panel_background"
+            android:clickable="true"
+            android:paddingBottom="16.0dip"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip"
+            android:paddingTop="16.0dip" >
+
+            <TextView
+                android:id="@+id/deviceType_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="设备类型："
+                android:textColor="#ff333333"
+                android:textSize="15.0dip" />
+
+            <ImageView
+                android:id="@+id/scan_now_new_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/arrow" />
+
+            <TextView
+                android:id="@+id/deviceType_value"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_toLeftOf="@id/scan_now_new_1"
+                android:layout_toRightOf="@id/deviceType_title"
+                android:gravity="right"
+                android:singleLine="true"
+                android:textColor="#ff676767"
+                android:textSize="15.0dip" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/batchId_panel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/deviceType_panel"
+            android:background="@drawable/activity_panel_background"
+            android:clickable="true"
+            android:paddingBottom="16.0dip"
+            android:paddingLeft="16.0dip"
+            android:paddingRight="16.0dip"
+            android:paddingTop="16.0dip" >
+
+            <TextView
+                android:id="@+id/batchId_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="批次编号："
+                android:textColor="#ff333333"
+                android:textSize="15.0dip" />
+
+            <ImageView
+                android:id="@+id/scan_now_new_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/arrow" />
+
+            <TextView
+                android:id="@+id/batchId_value"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_toLeftOf="@id/scan_now_new_2"
+                android:layout_toRightOf="@id/batchId_title"
+                android:gravity="right"
+                android:singleLine="true"
+                android:textColor="#ff676767"
+                android:textSize="15.0dip" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/btn_start"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="20.0dip"
+            android:background="@drawable/common_btn_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="开始查询"
+            android:textColor="#ffffffff"
+            android:textSize="18.0dip" />
+    </RelativeLayout>
+
+</RelativeLayout>
