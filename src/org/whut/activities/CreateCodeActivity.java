@@ -1,9 +1,12 @@
 package org.whut.activities;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.SimpleFormatter;
 
 import org.whut.client.CasClient;
 import org.whut.qrcodemanagement.R;
@@ -39,7 +42,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-@SuppressLint("HandlerLeak")
+@SuppressLint({ "HandlerLeak", "SimpleDateFormat" })
 public class CreateCodeActivity extends Activity{
 
 	private String deviceId;
@@ -428,14 +431,63 @@ public class CreateCodeActivity extends Activity{
 					int h = bitmapOrg.getHeight();
 					mBTService.PrintImage(
 							resizeImage(bitmapOrg, 48 * 8, h), 5000);// 第二个参数代表延时操作，如果时间太短，会导致打印机堵塞。76打印机需要延时4000到5000
-//					try{
-//							Thread.sleep(5000);
-//						}catch(InterruptedException e){
-//						e.printStackTrace();
-//					}
-					mBTService.PrintCharacters("设备编号：sjs001");
-					mBTService.PrintCharacters("\r\n");
-					mBTService.PrintCharacters("批次编号：bzj0005");
+					
+					
+					
+					mBTService.PrintCharacters("********************\n");
+					
+					try{
+						Thread.sleep(500);
+					}catch(InterruptedException e){
+						e.printStackTrace();
+					}
+
+					
+					mBTService.PrintCharacters("设备编号："+CommonUtils.GetNumberFromCode(qrCodeString)+"\n");
+					
+					try{
+						Thread.sleep(500);
+					}catch(InterruptedException e){
+						e.printStackTrace();
+					}
+					
+					mBTService.PrintCharacters("设备批次："+CommonUtils.GetBatchNumberFromCode(qrCodeString)+"\n");
+					
+					
+					
+					try{
+						Thread.sleep(500);
+					}catch(InterruptedException e){
+						e.printStackTrace();
+					}
+					
+					mBTService.PrintCharacters("********************\n");
+
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String date = sdf.format(new Date());
+					
+					
+					try{
+						Thread.sleep(500);
+					}catch(InterruptedException e){
+						e.printStackTrace();
+					}
+					mBTService.PrintCharacters(date+"\n");
+					
+					try{
+						Thread.sleep(500);
+					}catch(InterruptedException e){
+						e.printStackTrace();
+					}
+					
+					mBTService.PrintCharacters("********************");
+
+					try{
+						Thread.sleep(500);
+					}catch(InterruptedException e){
+						e.printStackTrace();
+					}
 					return;
 				}
 			}

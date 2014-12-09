@@ -199,6 +199,9 @@ public class BlueToothService {
 			r = mConnectedThread;
 		}
 		if (r != null) {
+			
+			
+			
 			r.write(out);
 		} else {
 			DisConnected();

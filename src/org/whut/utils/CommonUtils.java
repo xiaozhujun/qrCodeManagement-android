@@ -36,18 +36,30 @@ public class CommonUtils {
 		
 		
 		
-		return "rentManagement"+","+hashMap.get("id")+","+hashMap.get("number")+","+hashMap.get("batchId")+","+hashMap.get("batchNumber")+","
+		return "rent"+","+hashMap.get("id")+","+hashMap.get("number")+","+hashMap.get("batchId")+","+hashMap.get("batchNumber")+","
 				+hashMap.get("typeId")+","+hashMap.get("deviceType")+","+hashMap.get("isMainDevice");
 	}
 
 	public static String GetDeviceIdFromCode(String code) {
 		// TODO Auto-generated method stub
 		
-		Log.i("msg", code.substring(0, 14));
+		Log.i("msg", code.substring(0, 4));
 		
-		if(!code.substring(0, 14).equals("rentManagement")){
+		if(!code.substring(0, 4).equals("rent")){
 			return null;
 		}
 		return code.split(",")[1];
+	}
+
+
+
+	public static String GetBatchNumberFromCode(String qrCodeString) {
+		// TODO Auto-generated method stub
+		return qrCodeString.split(",")[4];
+	}
+
+	public static String GetNumberFromCode(String qrCodeString) {
+		// TODO Auto-generated method stub
+		return qrCodeString.split(",")[2];
 	}
 }
