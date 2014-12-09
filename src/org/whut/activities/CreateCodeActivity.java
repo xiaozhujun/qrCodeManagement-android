@@ -43,7 +43,7 @@ import android.widget.Toast;
 public class CreateCodeActivity extends Activity{
 
 	private String deviceId;
-	
+
 	private static final int REQUEST_EX = 1;
 	public static final int MESSAGE_STATE_CHANGE = 1;
 	public static final int MESSAGE_READ = 2;
@@ -75,12 +75,12 @@ public class CreateCodeActivity extends Activity{
 	private Button btn_finish;
 
 	private String last_address = null;
-	
+
 	private SharedPreferences preference;
 	private Editor editor;
-	
+
 	private ImageView arr_back;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -89,11 +89,11 @@ public class CreateCodeActivity extends Activity{
 
 		preference = getSharedPreferences("device", MODE_PRIVATE);
 		editor = preference.edit();
-		
+
 		if(preference.getBoolean("haveConnected", false)){
 			last_address = preference.getString("address", null);
 		}
-		
+
 		deviceId = getIntent().getStringExtra("deviceId");
 		qrCodeString = getIntent().getStringExtra("qrCodeString");
 
@@ -104,11 +104,11 @@ public class CreateCodeActivity extends Activity{
 		btn_print = (Button) findViewById(R.id.printCode);
 
 		btn_finish = (Button) findViewById(R.id.finish);
-		
+
 		arr_back = (ImageView) findViewById(R.id.iv_topbar_left_back);
-		
+
 		arr_back.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -116,7 +116,7 @@ public class CreateCodeActivity extends Activity{
 					mBTService.DisConnected();
 					mBTService = null;
 				}
-				
+
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -126,7 +126,7 @@ public class CreateCodeActivity extends Activity{
 				finish();
 			}
 		});
-		
+
 		dialog = new ProgressDialog(this);
 		dialog.setTitle("提示");
 		dialog.setMessage("初次搜索设备时间较长，请耐心等待，配对成功之后可在已配对设备中直接连接！");
@@ -162,7 +162,7 @@ public class CreateCodeActivity extends Activity{
 								mBTService.OpenDevice();
 								return;
 							}
-							
+
 							if (mBTService.GetScanState() == mBTService.STATE_SCANING) {
 								Log.i("msg","scanning...");
 								Message msg = new Message();
@@ -173,7 +173,7 @@ public class CreateCodeActivity extends Activity{
 								Log.i("msg","connecting...");
 								return;
 							}
-							
+
 							String info = mNewDevicesArrayAdapter.getItem(which);
 							String address = info.substring(info.length() - 17);
 							last_address = address;
@@ -181,8 +181,8 @@ public class CreateCodeActivity extends Activity{
 							Log.i("msg", address);
 							mBTService.DisConnected();
 							mBTService.ConnectToDevice(address);// 连接蓝牙
-							
-							
+
+
 						}
 					}).setTitle("扫描到的设备").show();
 
@@ -262,11 +262,11 @@ public class CreateCodeActivity extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if(btn_connect.getText().toString().equals("连接设备")){
-					
+
 					if(preference.getBoolean("haveConnected", false)){
 						Builder builder = new AlertDialog.Builder(CreateCodeActivity.this);
 						builder.setTitle("提示").setMessage("是否直接连接上次配对成功设备？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-							
+
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								// TODO Auto-generated method stub
@@ -282,14 +282,14 @@ public class CreateCodeActivity extends Activity{
 								if (mBTService.getState() == mBTService.STATE_CONNECTING) {
 									return;
 								}
-								
-							
+
+
 								Log.i("msg", "直接配对"+last_address);
 								mBTService.DisConnected();
 								mBTService.ConnectToDevice(last_address);
 							}
 						}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-							
+
 							@Override
 							public void onClick(DialogInterface dialog2, int which) {
 								// TODO Auto-generated method stub
@@ -308,6 +308,11 @@ public class CreateCodeActivity extends Activity{
 
 								if (!mBTService.IsOpen()) {// 判断蓝牙是否打开
 									mBTService.OpenDevice();
+									dialog.cancel();
+									timer.cancel();
+									if (mBTService.GetScanState() == mBTService.STATE_SCANING){
+										mBTService.StopScan();
+									}
 									return;
 								}
 
@@ -328,7 +333,7 @@ public class CreateCodeActivity extends Activity{
 										mBTService.ScanDevice();
 									}
 								}.start();
-								
+
 							}
 						}).show();
 					}else{
@@ -368,20 +373,20 @@ public class CreateCodeActivity extends Activity{
 							}
 						}.start();
 					}
-					
-					
+
+
 				}else if(btn_connect.getText().toString().equals("已经连接")){
 					Builder builder = new AlertDialog.Builder(CreateCodeActivity.this);
 					builder.setTitle("提示").setMessage("是否断开连接？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-						
+
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
-							
+
 							if (mBTService.getState() == mBTService.STATE_CONNECTED) {
 								mBTService.DisConnected();
 							}
-							
+
 						}
 					}).setNegativeButton("取消", null).show();
 				}
@@ -423,14 +428,22 @@ public class CreateCodeActivity extends Activity{
 					int h = bitmapOrg.getHeight();
 					mBTService.PrintImage(
 							resizeImage(bitmapOrg, 48 * 8, h), 5000);// 第二个参数代表延时操作，如果时间太短，会导致打印机堵塞。76打印机需要延时4000到5000
+//					try{
+//							Thread.sleep(5000);
+//						}catch(InterruptedException e){
+//						e.printStackTrace();
+//					}
+					mBTService.PrintCharacters("设备编号：sjs001");
+					mBTService.PrintCharacters("\r\n");
+					mBTService.PrintCharacters("批次编号：bzj0005");
 					return;
 				}
 			}
 
 		});
-		
+
 		btn_finish.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -439,7 +452,7 @@ public class CreateCodeActivity extends Activity{
 		});
 
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
@@ -448,9 +461,9 @@ public class CreateCodeActivity extends Activity{
 			mBTService.DisConnected();
 			mBTService = null;
 		}
-		
+
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
@@ -458,7 +471,7 @@ public class CreateCodeActivity extends Activity{
 			mBTService.DisConnected();
 			mBTService = null;
 		}
-		
+
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -467,7 +480,7 @@ public class CreateCodeActivity extends Activity{
 		}
 		finish();
 	}
-	
+
 	public static Bitmap resizeImage(Bitmap bitmap, int w, int h) {
 		Bitmap BitmapOrg = bitmap;
 		int width = BitmapOrg.getWidth();
@@ -483,31 +496,31 @@ public class CreateCodeActivity extends Activity{
 				height, matrix, true);
 		return resizedBitmap;
 	}
-	
+
 	class SetPrintThread implements Runnable{
 
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-		 Message msg = Message.obtain();
-		 
-		 HashMap<String,String> params = new HashMap<String,String>();
-		 
-		 params.put("deviceId", deviceId);
-		 
-		 Log.i("msg", deviceId);
-		 
-		 params.put("havePrint", "1");
-				
-		 String result = CasClient.getInstance().doPost(UrlStrings.URL_SETPRINT,params);
-		 
-		 Log.i("msg", result);
-		 
-		 msg.what = 3;
-		 
-		 handler.sendMessage(msg);
-			
+			Message msg = Message.obtain();
+
+			HashMap<String,String> params = new HashMap<String,String>();
+
+			params.put("deviceId", deviceId);
+
+			Log.i("msg", deviceId);
+
+			params.put("havePrint", "1");
+
+			String result = CasClient.getInstance().doPost(UrlStrings.URL_SETPRINT,params);
+
+			Log.i("msg", result);
+
+			msg.what = 3;
+
+			handler.sendMessage(msg);
+
 		}
 	}
-	
+
 }

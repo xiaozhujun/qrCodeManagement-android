@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.whut.qrcodemanagement.R;
+import org.whut.utils.CommonUtils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -46,6 +47,8 @@ public class MainActivity extends Activity{
 	private String batchId_value;
 	
 	private ImageView arr_back;
+	
+	private RelativeLayout scan;
 	
 
 	/** 
@@ -118,6 +121,19 @@ public class MainActivity extends Activity{
 							System.exit(0);
 					}
 				}).setNegativeButton("取消", null).show();
+			}
+		});
+		
+		scan = (RelativeLayout) findViewById(R.id.tv_topbar_right_map_layout);
+		
+		scan.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+			
+					Intent it = new Intent(MainActivity.this,ScanCodeActivity.class);
+					startActivityForResult(it, 0);
 			}
 		});
 		
@@ -224,4 +240,22 @@ public class MainActivity extends Activity{
 		});
 
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		
+		String code = data.getStringExtra("Code");
+		Intent it = new Intent(MainActivity.this,CreateCodeActivity.class);
+		it.putExtra("qrCodeString", code);
+		String deviceId = CommonUtils.GetDeviceIdFromCode(code);
+		if(deviceId==null){
+			Toast.makeText(MainActivity.this, "请扫设备专用二维码！", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		it.putExtra("deviceId", deviceId);
+		startActivity(it);
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 }

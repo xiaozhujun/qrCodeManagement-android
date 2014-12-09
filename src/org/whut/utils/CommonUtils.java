@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import android.util.Log;
+
 public class CommonUtils {
 
 	//判断输入值是否为数字
@@ -34,7 +36,18 @@ public class CommonUtils {
 		
 		
 		
-		return hashMap.get("id")+","+hashMap.get("number")+","+hashMap.get("batchId")+","+hashMap.get("batchNumber")+","
+		return "rentManagement"+","+hashMap.get("id")+","+hashMap.get("number")+","+hashMap.get("batchId")+","+hashMap.get("batchNumber")+","
 				+hashMap.get("typeId")+","+hashMap.get("deviceType")+","+hashMap.get("isMainDevice");
+	}
+
+	public static String GetDeviceIdFromCode(String code) {
+		// TODO Auto-generated method stub
+		
+		Log.i("msg", code.substring(0, 14));
+		
+		if(!code.substring(0, 14).equals("rentManagement")){
+			return null;
+		}
+		return code.split(",")[1];
 	}
 }
