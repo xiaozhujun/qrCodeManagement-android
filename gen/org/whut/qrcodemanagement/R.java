@@ -496,8 +496,10 @@ public final class R {
         public static final int scan=0x7f02001f;
         public static final int show_btn_normal=0x7f020020;
         public static final int show_btn_pressed=0x7f020021;
-        public static final int username_input=0x7f020022;
-        public static final int white=0x7f020023;
+        public static final int title=0x7f020022;
+        public static final int title_icon=0x7f020023;
+        public static final int username_input=0x7f020024;
+        public static final int white=0x7f020025;
     }
     public static final class id {
         public static final int batchId_panel=0x7f08001d;

@@ -647,9 +647,9 @@ public class BlueToothService {
 	
 		for (i = 0; i < str.length(); i++) {
 			c = str.charAt(i);
-			j = (c >>> 8); // ȡ����8λ
+			j = (c >>> 8); // 
 			send[i*2]=(byte)j;
-			j = (c & 0xFF); // ȡ����8λ
+			j = (c & 0xFF); // 
 			send[i*2+1]=(byte)j;
 		}
 		return send;
@@ -685,7 +685,6 @@ public class BlueToothService {
 		byte[] sendper;
 		int num = 0;
 		int total = 99;
-		// �ϰ��ӡ��ֻҪ�����
 		while (num != sendbuf.length) {
 			if (1 == 1) {
 				if ((sendbuf.length - num) > total) {

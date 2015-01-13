@@ -13,6 +13,7 @@ import org.whut.qrcodemanagement.R;
 import org.whut.services.BlueToothService;
 import org.whut.services.BlueToothService.OnReceiveDataHandleEvent;
 import org.whut.utils.BarcodeCreater;
+import org.whut.utils.BitmapUtils;
 import org.whut.utils.CommonUtils;
 import org.whut.utils.UrlStrings;
 
@@ -30,7 +31,9 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -137,7 +140,7 @@ public class CreateCodeActivity extends Activity{
 		dialog.setIndeterminate(false);
 
 
-		bitmap = BarcodeCreater.encode2dAsBitmap(qrCodeString, 500, 500, 2);
+		bitmap = BarcodeCreater.encode2dAsBitmap(qrCodeString, 200,200, 2);
 
 		qrCodeImage.setImageBitmap(bitmap);
 
@@ -426,68 +429,16 @@ public class CreateCodeActivity extends Activity{
 					return;
 				}
 				if (bitmap != null) {
-					Bitmap bitmapOrg = bitmap;// BitmapFactory.decodeFile(picPath);
+					Bitmap title = BitmapFactory.decodeResource(getResources(), R.drawable.title_icon); 
+					Bitmap bitmapOrg = BitmapUtils.createTag(BitmapUtils.createBitmapTitle("CSEI小组", title),bitmap, BitmapUtils.createBitmapText("设备编号:"+CommonUtils.GetNumberFromCode(qrCodeString), "批次编号:"+CommonUtils.GetBatchNumberFromCode(qrCodeString)));// BitmapFactory.decodeFile(picPath);
 					int w = bitmapOrg.getWidth();
 					int h = bitmapOrg.getHeight();
-					mBTService.PrintImage(
-							resizeImage(bitmapOrg, 48 * 8, h), 5000);// 第二个参数代表延时操作，如果时间太短，会导致打印机堵塞。76打印机需要延时4000到5000
 					
 					
-					
-					mBTService.PrintCharacters("********************\n");
-					
-					try{
-						Thread.sleep(500);
-					}catch(InterruptedException e){
-						e.printStackTrace();
-					}
-
-					
-					mBTService.PrintCharacters("设备编号："+CommonUtils.GetNumberFromCode(qrCodeString)+"\n");
-					
-					try{
-						Thread.sleep(500);
-					}catch(InterruptedException e){
-						e.printStackTrace();
-					}
-					
-					mBTService.PrintCharacters("设备批次："+CommonUtils.GetBatchNumberFromCode(qrCodeString)+"\n");
+					mBTService.PrintImage(resizeImage(bitmapOrg, 48*8, h)
+							, 5000);// 第二个参数代表延时操作，如果时间太短，会导致打印机堵塞。76打印机需要延时4000到5000
 					
 					
-					
-					try{
-						Thread.sleep(500);
-					}catch(InterruptedException e){
-						e.printStackTrace();
-					}
-					
-					mBTService.PrintCharacters("********************\n");
-
-					
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					String date = sdf.format(new Date());
-					
-					
-					try{
-						Thread.sleep(500);
-					}catch(InterruptedException e){
-						e.printStackTrace();
-					}
-					mBTService.PrintCharacters(date+"\n");
-					
-					try{
-						Thread.sleep(500);
-					}catch(InterruptedException e){
-						e.printStackTrace();
-					}
-					
-					mBTService.PrintCharacters("********************");
-
-					try{
-						Thread.sleep(500);
-					}catch(InterruptedException e){
-						e.printStackTrace();
-					}
 					return;
 				}
 			}

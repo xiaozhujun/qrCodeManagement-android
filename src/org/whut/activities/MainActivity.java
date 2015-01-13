@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -244,17 +245,26 @@ public class MainActivity extends Activity{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		
-		String code = data.getStringExtra("Code");
-		Intent it = new Intent(MainActivity.this,CreateCodeActivity.class);
-		it.putExtra("qrCodeString", code);
-		String deviceId = CommonUtils.GetDeviceIdFromCode(code);
-		if(deviceId==null){
-			Toast.makeText(MainActivity.this, "请扫设备专用二维码！", Toast.LENGTH_SHORT).show();
-			return;
+		Log.i("msg", resultCode+"");
+		switch(resultCode){
+		case -1:
+			String code = data.getStringExtra("Code");
+			Intent it = new Intent(MainActivity.this,CreateCodeActivity.class);
+			it.putExtra("qrCodeString", code);
+			String deviceId = CommonUtils.GetDeviceIdFromCode(code);
+			if(deviceId==null){
+				Toast.makeText(MainActivity.this, "请扫设备专用二维码！", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			it.putExtra("deviceId", deviceId);
+			startActivity(it);
+			
+			
+			break;
+		case 0:
+			break;
 		}
-		it.putExtra("deviceId", deviceId);
-		startActivity(it);
+
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
