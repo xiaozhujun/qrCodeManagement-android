@@ -1,5 +1,7 @@
 package org.whut.activities;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -430,7 +432,15 @@ public class CreateCodeActivity extends Activity{
 				}
 				if (bitmap != null) {
 					Bitmap title = BitmapFactory.decodeResource(getResources(), R.drawable.title_icon); 
-					Bitmap bitmapOrg = BitmapUtils.createTag(BitmapUtils.createBitmapTitle("CSEI小组", title),bitmap, BitmapUtils.createBitmapText("设备编号:"+CommonUtils.GetNumberFromCode(qrCodeString), "批次编号:"+CommonUtils.GetBatchNumberFromCode(qrCodeString)));// BitmapFactory.decodeFile(picPath);
+					
+					Bitmap title2 = resizeImage(title, 72, 72);
+					
+//					 InputStream in = getResources().openRawResource(R.raw.title_icon); 
+//					
+//					 Bitmap title = BitmapUtils.decodeSampledBitmapFromStream(in, 72, 72);
+					 
+					Bitmap bitmapOrg = BitmapUtils.createTag(BitmapUtils.createBitmapTitle("CSEI小组", title2),bitmap, BitmapUtils.createBitmapText("设备编号:"+CommonUtils.GetNumberFromCode(qrCodeString), "批次编号:"+CommonUtils.GetBatchNumberFromCode(qrCodeString)));// BitmapFactory.decodeFile(picPath);
+					
 					int w = bitmapOrg.getWidth();
 					int h = bitmapOrg.getHeight();
 					
